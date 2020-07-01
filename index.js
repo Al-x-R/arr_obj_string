@@ -57,27 +57,45 @@ console.log(maxArrValue(arrRandom))
 
 // Функция добавления нового элемента в массив по указанному индексу.
 
-arrRandom.splice(2, 0, 'hi')
-console.log(arrRandom)
+Array.prototype.addElem = function (index, item) {
+    this.splice(index, 0, item)
+}
+
+const testArr1 = [1, 2, 3, 4, 5]
+let newArray = testArr1.addElem(3, 'hello from test')
+console.log(newArray)
 
 // Функция удаления элемента из массива по указанному индексу.
 
-arrRandom.splice(2, 1)
-console.log(arrRandom)
+Array.prototype.delElem = function (index) {
+    this.splice(index, 1)
+}
+
+const testArr2 = [1, 2, 3, 4, 5]
+testArr2.delElem(3)
+console.log(testArr2)
+
+// new random array
+
+const arrRandom2 = []
+
+function getRandomArr2() {
+    for (let i = 0; i < 5; i++) {
+        arrRandom2.push(Math.round(Math.random() * 100))
+    }
+    return arrRandom2
+}
+
+console.log(getRandomArr2())
 
 /*
 Функция принимает 2 массива и возвращает новый массив,
     в котором собраны все элементы из двух массивов без повторений.*/
 
-const arr1 = [1, 2, 3, 4, 5, 'hi', 'hello']
-const arr2 = [1, 3, 5, 'hi', 'home']
-
-
 function newArr(arr1, arr2) {
     let resArr = []
     let arr3 = arr1.concat(arr2)
     arr3.sort()
-    console.log(arr3)
     for (let i = 0; i < arr3.length; ++i) {
         if (arr3[i] !== arr3[i - 1]) {
             resArr.push(arr3[i])
@@ -86,24 +104,36 @@ function newArr(arr1, arr2) {
     console.log(resArr)
 }
 
-console.log(newArr(arr1, arr2))
+console.log(newArr(arrRandom, arrRandom2))
+
+/*Функция принимает 2 массива и возвращает новый массив, в котором собраны все элементы из первого массива,
+    которых нет во втором массиве.*/
+
+function newArray5(arr1, arr2) {
+    let resArr5 = []
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!arr2.includes(arr1[i])) {
+            resArr5.push(arr1[i])
+        }
+    }
+    return resArr5
+}
+
+console.log(newArray5(arrRandom, arrRandom2))
 
 /*
 Функция принимает 2 массива и возвращает новый массив, в котором собраны общие элементы
-(то есть элементы, которые встречаются и в первом и во втором массивах) без повторений.
-*/
+(то есть элементы, которые встречаются и в первом и во втором массивах) без повторений.*/
 
-function newArr1(arr1, arr2) {
-    let resArr1 = []
-    let arr3 = arr1.concat(arr2)
-    arr3.sort()
-    console.log(arr3)
-    for (let i = 0; i < arr3.length; ++i) {
-        if (arr3[i] === arr3[i - 1]) {
-            resArr1.push(arr3[i])
+function newArray2(arr1, arr2) {
+    let resArr2 = []
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr2.includes(arr1[i]) && !resArr2.includes(arr1[i])) {
+            resArr2.push(arr1[i])
         }
     }
-    console.log(resArr1)
+    return resArr2
 }
 
-console.log(newArr1(arr1, arr2))
+console.log(newArray2(arrRandom, arrRandom2))
